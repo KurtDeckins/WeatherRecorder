@@ -83,12 +83,29 @@ def main():
         if not (0 <= humidity <= 100): 
             print("Oops, RH (%) must be between 0-100 only...") 
             continue 
-        # add 3 more weather phenomenon here, such as UV index, etc. 
+        
+        # Add additional weather phenomena like UV index, wind speed, and pressure
+        uv_index = float(input(" Enter UV Index (0-11+): ")) 
+        wind_speed = float(input(" Enter Wind Speed (km/h): "))
+        pressure = float(input(" Enter Air Pressure (hPa): "))
+        
+        if not (0 <= uv_index <= 11): 
+            print("Oops, UV Index must be between 0-11...") 
+            continue 
+        if wind_speed < 0: 
+            print("Oops, Wind Speed must be positive...") 
+            continue 
+        if pressure < 900 or pressure > 1100: 
+            print("Oops, Air Pressure should be between 900 and 1100 hPa...") 
+            continue 
 
+        # Store all data including additional weather phenomena
         records[date] = { 
             "temperature": temperature, 
             "humidity": humidity, 
-            # add the key-value pairs here... 
+            "uv_index": uv_index,
+            "wind_speed": wind_speed,
+            "pressure": pressure
         } 
 
     print("\nSaving to file...") 
@@ -100,12 +117,11 @@ def main():
         formatted_date = format_date(date) 
         temperature = data["temperature"] 
         humidity = data["humidity"] 
-        # phenomenon3 = data["phenomenon3"] 
-        # phenomenon4 = data["phenomenon4"] 
-        # phenomenon5 = data["phenomenon5"] 
+        uv_index = data["uv_index"]
+        wind_speed = data["wind_speed"]
+        pressure = data["pressure"]
         
-        print(f"{formatted_date}\t|  {temperature:.1f}°C\t| {humidity:.1f}%") 
-        # print(f" * {phenomenon3:,.1f} symbol | ...")
+        print(f"{formatted_date}\t|  {temperature:.1f}°C\t| {humidity:.1f}%\t| UV: {uv_index:.1f}\t| Wind: {wind_speed:.1f} km/h\t| Pressure: {pressure:.1f} hPa")
 
 if __name__ == "__main__": 
     main()
